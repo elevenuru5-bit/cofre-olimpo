@@ -3,271 +3,1140 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>OLIMPO | Abrí tu cofre</title>
 
+  <meta
+    name="description"
+    content="Abrí el cofre OLIMPO y descubrí tu sorpresa."
+  >
+
   <style>
+
+    /* =========================
+       CONFIGURACIÓN GENERAL
+    ========================== */
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
-    body {
-      background:
-        radial-gradient(circle at 50% 20%, #2b0d42 0%, #09060d 45%, #000 100%);
-      color: white;
-      font-family: Arial, Helvetica, sans-serif;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      text-align: center;
+    html {
+      scroll-behavior: smooth;
     }
 
-    .container {
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 50% 15%, rgba(125, 42, 180, 0.25), transparent 35%),
+        radial-gradient(circle at 50% 90%, rgba(212, 159, 55, 0.15), transparent 35%),
+        linear-gradient(180deg, #050307 0%, #100716 55%, #030204 100%);
+
+      color: #ffffff;
+      font-family: Arial, Helvetica, sans-serif;
+
+      display: flex;
+      justify-content: center;
+
+      overflow-x: hidden;
+    }
+
+
+    /* =========================
+       CONTENEDOR PRINCIPAL
+    ========================== */
+
+    .page {
       width: 100%;
       max-width: 520px;
       min-height: 100vh;
-      padding-bottom: 40px;
+
+      background:
+        linear-gradient(
+          180deg,
+          rgba(15, 6, 22, 0.92),
+          rgba(4, 3, 6, 0.98)
+        );
+
+      border-left: 1px solid rgba(211, 161, 255, 0.12);
+      border-right: 1px solid rgba(211, 161, 255, 0.12);
+
+      box-shadow:
+        0 0 60px rgba(0, 0, 0, 0.75);
+
+      position: relative;
+      overflow: hidden;
     }
+
+
+    /* =========================
+       IMAGEN OLIMPO
+    ========================== */
 
     .hero {
       width: 100%;
       display: block;
     }
 
+
+    /* =========================
+       CONTENIDO
+    ========================== */
+
     .content {
-      padding: 24px 20px;
-    }
-
-    h1 {
-      color: #f4cf73;
-      font-size: 32px;
-      margin-bottom: 8px;
-    }
-
-    .subtitle {
-      color: #d7a8ff;
-      font-size: 20px;
-      margin-bottom: 24px;
-    }
-
-    .chest {
-      width: 190px;
-      height: 145px;
-      margin: 25px auto;
+      padding:
+        28px
+        20px
+        45px;
+      text-align: center;
       position: relative;
-      cursor: pointer;
-      transition: transform .3s;
-    }
-
-    .chest:hover {
-      transform: scale(1.04);
-    }
-
-    .lid {
-      width: 190px;
-      height: 72px;
-      background: linear-gradient(#815316, #342009);
-      border: 4px solid #e7bb55;
-      border-radius: 24px 24px 8px 8px;
-      position: absolute;
-      top: 0;
-      transform-origin: bottom;
-      transition: transform .8s ease;
-      z-index: 3;
-    }
-
-    .base {
-      width: 190px;
-      height: 90px;
-      background: linear-gradient(#57340f, #201006);
-      border: 4px solid #dba843;
-      border-radius: 8px 8px 18px 18px;
-      position: absolute;
-      bottom: 0;
-    }
-
-    .lock {
-      width: 38px;
-      height: 45px;
-      border-radius: 6px;
-      background: #eabe59;
-      border: 2px solid #fff0a8;
-      position: absolute;
-      left: 50%;
-      top: 62px;
-      transform: translateX(-50%);
       z-index: 5;
     }
 
-    .chest.open .lid {
-      transform: rotateX(70deg) translateY(-18px);
+
+    .brand-line {
+      color: #d8aa50;
+
+      font-size: 12px;
+      font-weight: 700;
+
+      letter-spacing: 4px;
+
+      margin-bottom: 18px;
     }
 
-    .light {
-      position: absolute;
-      width: 170px;
-      height: 130px;
-      left: 10px;
-      top: 35px;
-      background: radial-gradient(circle, #fff6ad, #ffb82988, transparent 70%);
-      filter: blur(10px);
-      opacity: 0;
-      transition: opacity .5s;
-      z-index: 1;
-    }
 
-    .chest.open .light {
-      opacity: 1;
-    }
+    .title {
+      font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
 
-    button, .claim {
-      width: 100%;
-      max-width: 330px;
-      padding: 17px;
-      border-radius: 14px;
-      border: none;
-      font-weight: 800;
-      font-size: 17px;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-    }
+      font-size: clamp(31px, 8vw, 46px);
 
-    #openBtn {
-      color: #1d1305;
-      background: linear-gradient(90deg, #ffd87a, #b47b22);
-      box-shadow: 0 0 25px #e3a43c55;
-    }
+      line-height: 1;
 
-    .result {
-      display: none;
-      margin-top: 28px;
-      padding: 25px 18px;
-      border: 1px solid #d7a8ff55;
-      background: #160c20dd;
-      border-radius: 22px;
-      animation: aparecer .8s ease;
-    }
+      color: #f3c969;
 
-    .result h2 {
-      color: #d9a8ff;
-      font-size: 20px;
-    }
+      text-shadow:
+        0 0 14px rgba(234, 187, 86, 0.22);
 
-    .result .percent {
-      color: #ffd878;
-      font-size: 54px;
-      font-weight: 900;
-      margin: 10px 0;
-    }
-
-    .result h3 {
-      font-size: 24px;
       margin-bottom: 10px;
     }
 
-    .result p {
-      color: #eee;
+
+    .subtitle {
+      font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+      font-size: clamp(23px, 6vw, 31px);
+
+      color: #deb0ff;
+
+      text-shadow:
+        0 0 16px rgba(181, 90, 255, 0.28);
+
+      margin-bottom: 18px;
+    }
+
+
+    .intro {
+      max-width: 390px;
+      margin: 0 auto;
+
+      color: #ddd3e5;
+
+      font-size: 15px;
       line-height: 1.5;
-      margin-bottom: 22px;
     }
 
-    .claim {
-      background: linear-gradient(90deg, #8d4fea, #d497ff);
-      color: white;
+
+    /* =========================
+       COFRE
+    ========================== */
+
+    .chest-area {
+      height: 260px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      position: relative;
+
+      margin-top: 12px;
     }
 
-    footer {
-      color: #e5bd67;
+
+    .chest-glow {
+      position: absolute;
+
+      width: 230px;
+      height: 170px;
+
+      border-radius: 50%;
+
+      background:
+        radial-gradient(
+          ellipse,
+          rgba(255, 211, 100, 0.45),
+          rgba(174, 84, 255, 0.12),
+          transparent 70%
+        );
+
+      filter: blur(25px);
+
+      opacity: 0.45;
+
+      transition:
+        opacity 0.7s ease,
+        transform 0.7s ease;
+    }
+
+
+    .chest {
+      width: 210px;
+      height: 170px;
+
+      position: relative;
+
+      cursor: pointer;
+
+      transform-style: preserve-3d;
+
+      transition:
+        transform 0.3s ease;
+
+      z-index: 2;
+    }
+
+
+    .chest:hover {
+      transform: scale(1.03);
+    }
+
+
+    .chest-base {
+      position: absolute;
+
+      left: 0;
+      bottom: 0;
+
+      width: 210px;
+      height: 105px;
+
+      border-radius:
+        7px
+        7px
+        17px
+        17px;
+
+      border: 4px solid #dba846;
+
+      background:
+        linear-gradient(
+          180deg,
+          #604017 0%,
+          #311b08 55%,
+          #150b04 100%
+        );
+
+      box-shadow:
+        inset 0 0 20px rgba(255, 197, 82, 0.12),
+        0 15px 35px rgba(0, 0, 0, 0.55);
+    }
+
+
+    .chest-base::before,
+    .chest-base::after {
+      content: "";
+
+      position: absolute;
+
+      top: 0;
+
+      width: 13px;
+      height: 100%;
+
+      background:
+        linear-gradient(
+          90deg,
+          #79511c,
+          #e2ad4e,
+          #6f4517
+        );
+    }
+
+
+    .chest-base::before {
+      left: 23px;
+    }
+
+
+    .chest-base::after {
+      right: 23px;
+    }
+
+
+    .chest-lid {
+      position: absolute;
+
+      left: 0;
+      top: 10px;
+
+      width: 210px;
+      height: 88px;
+
+      border-radius:
+        22px
+        22px
+        8px
+        8px;
+
+      border: 4px solid #e4b750;
+
+      background:
+        linear-gradient(
+          180deg,
+          #7e531c,
+          #42270c 55%,
+          #231307
+        );
+
+      transform-origin:
+        center bottom;
+
+      transition:
+        transform 0.9s cubic-bezier(.17,.67,.3,1.22);
+
+      z-index: 5;
+
+      box-shadow:
+        inset 0 0 18px rgba(255, 219, 127, 0.10),
+        0 8px 25px rgba(0, 0, 0, 0.45);
+    }
+
+
+    .chest-lock {
+      width: 42px;
+      height: 47px;
+
+      position: absolute;
+
+      left: 50%;
+      top: 72px;
+
+      transform: translateX(-50%);
+
+      border-radius: 7px;
+
+      border: 2px solid #ffe5a0;
+
+      background:
+        linear-gradient(
+          180deg,
+          #ffdd76,
+          #b47d25
+        );
+
+      z-index: 8;
+
+      transition:
+        opacity 0.4s ease,
+        transform 0.5s ease;
+
+      box-shadow:
+        0 0 15px rgba(255, 211, 100, 0.4);
+    }
+
+
+    .chest-lock::before {
+      content: "";
+
+      position: absolute;
+
+      width: 24px;
+      height: 18px;
+
+      left: 50%;
+      top: -18px;
+
+      transform: translateX(-50%);
+
+      border:
+        5px solid
+        #ffdf80;
+
+      border-bottom: none;
+
+      border-radius:
+        15px
+        15px
+        0
+        0;
+    }
+
+
+    /* =========================
+       COFRE ABIERTO
+    ========================== */
+
+    .chest.open .chest-lid {
+      transform:
+        translateY(-24px)
+        rotateX(-70deg);
+    }
+
+
+    .chest.open .chest-lock {
+      opacity: 0;
+
+      transform:
+        translateX(-50%)
+        translateY(20px)
+        scale(0.6);
+    }
+
+
+    .chest.open + .chest-glow {
+      opacity: 1;
+      transform: scale(1.4);
+    }
+
+
+    .reward-light {
+      position: absolute;
+
+      width: 190px;
+      height: 150px;
+
+      left: 50%;
+      top: 75px;
+
+      transform:
+        translateX(-50%)
+        scale(0.5);
+
+      opacity: 0;
+
+      border-radius: 50%;
+
+      background:
+        radial-gradient(
+          circle,
+          #fff4bd 0%,
+          rgba(255, 191, 52, 0.65) 25%,
+          rgba(168, 70, 255, 0.20) 52%,
+          transparent 73%
+        );
+
+      filter: blur(9px);
+
+      transition:
+        opacity 0.6s ease,
+        transform 0.8s ease;
+
+      z-index: 1;
+    }
+
+
+    .reward-light.visible {
+      opacity: 1;
+
+      transform:
+        translateX(-50%)
+        scale(1.15);
+    }
+
+
+    /* =========================
+       BOTÓN ABRIR
+    ========================== */
+
+    .open-button {
+      width: 100%;
+      max-width: 340px;
+
+      min-height: 58px;
+
+      border: 1px solid #ffe29b;
+
+      border-radius: 15px;
+
+      background:
+        linear-gradient(
+          90deg,
+          #ad7926,
+          #ffdc78,
+          #b27b26
+        );
+
+      color: #211405;
+
+      font-size: 17px;
+      font-weight: 900;
+
+      letter-spacing: 1px;
+
+      cursor: pointer;
+
+      box-shadow:
+        0 10px 35px rgba(225, 170, 61, 0.24),
+        inset 0 1px rgba(255, 255, 255, 0.55);
+
+      transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        opacity 0.3s ease;
+    }
+
+
+    .open-button:hover {
+      transform: translateY(-2px);
+
+      box-shadow:
+        0 14px 40px rgba(225, 170, 61, 0.34);
+    }
+
+
+    .open-button:disabled {
+      cursor: default;
+    }
+
+
+    /* =========================
+       PREMIO
+    ========================== */
+
+    .result {
+      display: none;
+
       margin-top: 30px;
-      letter-spacing: 2px;
+
+      padding:
+        28px
+        18px
+        25px;
+
+      border-radius: 23px;
+
+      border:
+        1px solid
+        rgba(218, 168, 255, 0.36);
+
+      background:
+        linear-gradient(
+          180deg,
+          rgba(44, 20, 59, 0.90),
+          rgba(15, 8, 20, 0.97)
+        );
+
+      box-shadow:
+        0 20px 55px rgba(0, 0, 0, 0.45),
+        inset 0 0 30px rgba(177, 91, 255, 0.04);
+
+      animation:
+        rewardAppear
+        0.8s
+        cubic-bezier(.22,.7,.25,1.15);
     }
 
-    @keyframes aparecer {
+
+    .result.visible {
+      display: block;
+    }
+
+
+    .unlocked {
+      display: inline-block;
+
+      padding:
+        8px
+        14px;
+
+      border-radius: 30px;
+
+      color: #e8c8ff;
+
+      border:
+        1px solid
+        rgba(209, 145, 255, 0.35);
+
+      background:
+        rgba(158, 77, 221, 0.10);
+
+      font-size: 11px;
+      font-weight: 800;
+
+      letter-spacing: 2px;
+
+      margin-bottom: 15px;
+    }
+
+
+    .result-title {
+      font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+      font-size: 28px;
+
+      color: #ffffff;
+
+      margin-bottom: 6px;
+    }
+
+
+    .percentage {
+      font-size: clamp(68px, 18vw, 92px);
+
+      font-weight: 900;
+
+      line-height: 1;
+
+      margin:
+        7px
+        0;
+
+      background:
+        linear-gradient(
+          180deg,
+          #fff3b8 0%,
+          #ffc94f 40%,
+          #a96b17 100%
+        );
+
+      -webkit-background-clip: text;
+      background-clip: text;
+
+      color: transparent;
+
+      text-shadow:
+        0 5px 30px rgba(255, 194, 57, 0.12);
+    }
+
+
+    .extra {
+      font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+      color: #dfb2ff;
+
+      font-size: 26px;
+      font-weight: 700;
+
+      margin-bottom: 18px;
+    }
+
+
+    .message {
+      color: #eee8f2;
+
+      font-size: 16px;
+
+      line-height: 1.55;
+
+      max-width: 370px;
+
+      margin:
+        0 auto
+        20px;
+    }
+
+
+    /* =========================
+       NO ES BOTÓN
+    ========================== */
+
+    .capture-box {
+      width: 100%;
+      max-width: 350px;
+
+      margin:
+        0 auto
+        12px;
+
+      padding:
+        17px
+        15px;
+
+      border-radius: 15px;
+
+      border:
+        1px solid
+        rgba(230, 187, 255, 0.44);
+
+      background:
+        linear-gradient(
+          90deg,
+          #7440bd,
+          #c180ed
+        );
+
+      color: white;
+
+      font-size: 16px;
+      font-weight: 900;
+
+      letter-spacing: 0.5px;
+
+      cursor: default;
+
+      user-select: none;
+
+      box-shadow:
+        0 10px 30px rgba(148, 71, 200, 0.25);
+    }
+
+
+    .capture-note {
+      color: #cfc4d5;
+
+      font-size: 13px;
+
+      line-height: 1.45;
+    }
+
+
+    /* =========================
+       FOOTER
+    ========================== */
+
+    .footer {
+      margin-top: 32px;
+
+      color: #d7a949;
+
+      font-size: 13px;
+
+      letter-spacing: 3px;
+    }
+
+
+    .footer::before {
+      content: "";
+
+      display: block;
+
+      width: 80px;
+      height: 1px;
+
+      margin:
+        0 auto
+        15px;
+
+      background:
+        linear-gradient(
+          90deg,
+          transparent,
+          #d5a94a,
+          transparent
+        );
+    }
+
+
+    /* =========================
+       CONFETTI
+    ========================== */
+
+    .particle {
+      position: fixed;
+
+      width: 8px;
+      height: 8px;
+
+      border-radius: 50%;
+
+      pointer-events: none;
+
+      z-index: 999;
+
+      animation:
+        particleFall
+        1.8s
+        ease-out
+        forwards;
+    }
+
+
+    @keyframes rewardAppear {
+
       from {
         opacity: 0;
-        transform: translateY(20px) scale(.95);
+        transform:
+          translateY(25px)
+          scale(0.92);
       }
 
       to {
         opacity: 1;
-        transform: translateY(0) scale(1);
+        transform:
+          translateY(0)
+          scale(1);
       }
     }
+
+
+    @keyframes particleFall {
+
+      0% {
+        opacity: 1;
+
+        transform:
+          translate(0, 0)
+          rotate(0deg)
+          scale(1);
+      }
+
+      100% {
+        opacity: 0;
+
+        transform:
+          translate(
+            var(--x),
+            var(--y)
+          )
+          rotate(540deg)
+          scale(0.4);
+      }
+    }
+
+
+    /* =========================
+       CELULAR
+    ========================== */
+
+    @media (max-width: 480px) {
+
+      .content {
+        padding:
+          24px
+          16px
+          40px;
+      }
+
+      .chest-area {
+        height: 235px;
+      }
+
+      .chest {
+        transform: scale(0.94);
+      }
+
+      .chest:hover {
+        transform: scale(0.96);
+      }
+
+      .message {
+        font-size: 15px;
+      }
+
+      .capture-box {
+        font-size: 15px;
+      }
+    }
+
   </style>
 </head>
 
+
 <body>
 
-<div class="container">
+  <main class="page">
 
-  <!-- Tu imagen que ya subiste a GitHub -->
-  <img class="hero" src="khjl.png" alt="OLIMPO - Abrí el cofre">
 
-  <div class="content">
+    <!-- IMAGEN QUE YA SUBISTE AL REPOSITORIO -->
 
-    <h1>ABRÍ TU COFRE</h1>
-    <div class="subtitle">Tu sorpresa OLIMPO te está esperando</div>
+    <img
+      src="khjl.png"
+      alt="OLIMPO - Abrí el cofre"
+      class="hero"
+    >
 
-    <div class="chest" id="chest">
-      <div class="light"></div>
-      <div class="lid"></div>
-      <div class="base"></div>
-      <div class="lock"></div>
-    </div>
 
-    <button id="openBtn" onclick="abrirCofre()">
-      ABRIR COFRE
-    </button>
+    <section class="content">
 
-    <div class="result" id="result">
-      <h2>¡PREMIO DESBLOQUEADO!</h2>
 
-      <div class="percent">30%</div>
+      <div class="brand-line">
+        OLIMPO · TU RED DE CONFIANZA
+      </div>
 
-      <h3>EXTRA PARA VOS</h3>
 
-      <p>
-        Felicitaciones. Desbloqueaste tu beneficio especial de OLIMPO.
+      <h1 class="title">
+        ABRÍ EL COFRE
+      </h1>
+
+
+      <h2 class="subtitle">
+        DESCUBRÍ TU PREMIO
+      </h2>
+
+
+      <p class="intro">
+        Tocá el cofre y revelá tu sorpresa exclusiva.
       </p>
 
-      <a
-        class="claim"
-        href="https://wa.me/TU_NUMERO?text=Hola%20OLIMPO%2C%20abr%C3%AD%20el%20cofre%20y%20quiero%20reclamar%20mi%2030%25%20extra."
+
+
+      <!-- COFRE -->
+
+      <div class="chest-area">
+
+        <div
+          class="reward-light"
+          id="rewardLight"
+        ></div>
+
+
+        <div
+          class="chest"
+          id="chest"
+          onclick="abrirCofre()"
+        >
+
+          <div class="chest-lid"></div>
+
+          <div class="chest-base"></div>
+
+          <div class="chest-lock"></div>
+
+        </div>
+
+
+        <div class="chest-glow"></div>
+
+      </div>
+
+
+
+      <!-- BOTÓN INICIAL -->
+
+      <button
+        class="open-button"
+        id="openButton"
+        onclick="abrirCofre()"
       >
-        RECLAMAR 30%
-      </a>
-    </div>
+        ABRIR COFRE
+      </button>
 
-    <footer>
-      OLIMPO · TU RED DE CONFIANZA
-    </footer>
 
-  </div>
-</div>
 
-<script>
-  function abrirCofre() {
-    const chest = document.getElementById("chest");
-    const result = document.getElementById("result");
-    const button = document.getElementById("openBtn");
+      <!-- RESULTADO -->
 
-    chest.classList.add("open");
-    button.innerText = "ABRIENDO...";
-    button.disabled = true;
+      <section
+        class="result"
+        id="result"
+      >
 
-    setTimeout(() => {
-      result.style.display = "block";
-      button.style.display = "none";
+        <div class="unlocked">
+          PREMIO DESBLOQUEADO
+        </div>
 
-      result.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-      });
-    }, 1200);
-  }
-</script>
+
+        <h2 class="result-title">
+          ¡FELICITACIONES!
+        </h2>
+
+
+        <div class="percentage">
+          30%
+        </div>
+
+
+        <div class="extra">
+          EXTRA PARA VOS
+        </div>
+
+
+        <p class="message">
+          Desbloqueaste tu beneficio especial de OLIMPO.
+          <br><br>
+          Sacá una captura de esta pantalla y envíanosla para reclamar tu premio.
+        </p>
+
+
+        <!-- ESTO NO ES UN BOTÓN Y NO DERIVA A NINGÚN LADO -->
+
+        <div class="capture-box">
+          SACÁ CAPTURA Y ENVIANOSLA
+        </div>
+
+
+        <div class="capture-note">
+          Mostranos esta pantalla para validar tu 30% extra.
+        </div>
+
+      </section>
+
+
+
+      <footer class="footer">
+        VIVÍ LA EXPERIENCIA OLIMPO
+      </footer>
+
+
+    </section>
+
+  </main>
+
+
+
+  <script>
+
+    let abierto = false;
+
+
+    function abrirCofre() {
+
+      if (abierto) {
+        return;
+      }
+
+
+      abierto = true;
+
+
+      const chest =
+        document.getElementById("chest");
+
+      const result =
+        document.getElementById("result");
+
+      const button =
+        document.getElementById("openButton");
+
+      const light =
+        document.getElementById("rewardLight");
+
+
+      button.disabled = true;
+
+      button.textContent =
+        "ABRIENDO...";
+
+
+      chest.classList.add("open");
+
+      light.classList.add("visible");
+
+
+      setTimeout(() => {
+
+        crearParticulas();
+
+      }, 500);
+
+
+      setTimeout(() => {
+
+        button.style.display =
+          "none";
+
+        result.classList.add(
+          "visible"
+        );
+
+
+        setTimeout(() => {
+
+          result.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+          });
+
+        }, 150);
+
+      }, 1100);
+    }
+
+
+
+    function crearParticulas() {
+
+      const colores = [
+        "#ffd76a",
+        "#fff0b2",
+        "#c987ff",
+        "#8f52d9",
+        "#ffffff"
+      ];
+
+
+      const centroX =
+        window.innerWidth / 2;
+
+      const centroY =
+        window.innerHeight * 0.52;
+
+
+      for (let i = 0; i < 42; i++) {
+
+        const particle =
+          document.createElement("div");
+
+
+        particle.className =
+          "particle";
+
+
+        particle.style.left =
+          centroX + "px";
+
+        particle.style.top =
+          centroY + "px";
+
+
+        particle.style.background =
+          colores[
+            Math.floor(
+              Math.random() *
+              colores.length
+            )
+          ];
+
+
+        const x =
+          (Math.random() - 0.5) *
+          380;
+
+        const y =
+          100 +
+          Math.random() *
+          320;
+
+
+        particle.style.setProperty(
+          "--x",
+          x + "px"
+        );
+
+        particle.style.setProperty(
+          "--y",
+          y + "px"
+        );
+
+
+        document.body.appendChild(
+          particle
+        );
+
+
+        setTimeout(() => {
+
+          particle.remove();
+
+        }, 1900);
+      }
+    }
+
+  </script>
 
 </body>
 </html>
