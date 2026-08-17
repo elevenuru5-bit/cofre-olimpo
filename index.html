@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OLIMPO | Abrí tu cofre</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 50% 20%, #2b0d42 0%, #09060d 45%, #000 100%);
+      color: white;
+      font-family: Arial, Helvetica, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 520px;
+      min-height: 100vh;
+      padding-bottom: 40px;
+    }
+
+    .hero {
+      width: 100%;
+      display: block;
+    }
+
+    .content {
+      padding: 24px 20px;
+    }
+
+    h1 {
+      color: #f4cf73;
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: #d7a8ff;
+      font-size: 20px;
+      margin-bottom: 24px;
+    }
+
+    .chest {
+      width: 190px;
+      height: 145px;
+      margin: 25px auto;
+      position: relative;
+      cursor: pointer;
+      transition: transform .3s;
+    }
+
+    .chest:hover {
+      transform: scale(1.04);
+    }
+
+    .lid {
+      width: 190px;
+      height: 72px;
+      background: linear-gradient(#815316, #342009);
+      border: 4px solid #e7bb55;
+      border-radius: 24px 24px 8px 8px;
+      position: absolute;
+      top: 0;
+      transform-origin: bottom;
+      transition: transform .8s ease;
+      z-index: 3;
+    }
+
+    .base {
+      width: 190px;
+      height: 90px;
+      background: linear-gradient(#57340f, #201006);
+      border: 4px solid #dba843;
+      border-radius: 8px 8px 18px 18px;
+      position: absolute;
+      bottom: 0;
+    }
+
+    .lock {
+      width: 38px;
+      height: 45px;
+      border-radius: 6px;
+      background: #eabe59;
+      border: 2px solid #fff0a8;
+      position: absolute;
+      left: 50%;
+      top: 62px;
+      transform: translateX(-50%);
+      z-index: 5;
+    }
+
+    .chest.open .lid {
+      transform: rotateX(70deg) translateY(-18px);
+    }
+
+    .light {
+      position: absolute;
+      width: 170px;
+      height: 130px;
+      left: 10px;
+      top: 35px;
+      background: radial-gradient(circle, #fff6ad, #ffb82988, transparent 70%);
+      filter: blur(10px);
+      opacity: 0;
+      transition: opacity .5s;
+      z-index: 1;
+    }
+
+    .chest.open .light {
+      opacity: 1;
+    }
+
+    button, .claim {
+      width: 100%;
+      max-width: 330px;
+      padding: 17px;
+      border-radius: 14px;
+      border: none;
+      font-weight: 800;
+      font-size: 17px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    #openBtn {
+      color: #1d1305;
+      background: linear-gradient(90deg, #ffd87a, #b47b22);
+      box-shadow: 0 0 25px #e3a43c55;
+    }
+
+    .result {
+      display: none;
+      margin-top: 28px;
+      padding: 25px 18px;
+      border: 1px solid #d7a8ff55;
+      background: #160c20dd;
+      border-radius: 22px;
+      animation: aparecer .8s ease;
+    }
+
+    .result h2 {
+      color: #d9a8ff;
+      font-size: 20px;
+    }
+
+    .result .percent {
+      color: #ffd878;
+      font-size: 54px;
+      font-weight: 900;
+      margin: 10px 0;
+    }
+
+    .result h3 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .result p {
+      color: #eee;
+      line-height: 1.5;
+      margin-bottom: 22px;
+    }
+
+    .claim {
+      background: linear-gradient(90deg, #8d4fea, #d497ff);
+      color: white;
+    }
+
+    footer {
+      color: #e5bd67;
+      margin-top: 30px;
+      letter-spacing: 2px;
+    }
+
+    @keyframes aparecer {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- Tu imagen que ya subiste a GitHub -->
+  <img class="hero" src="khjl.png" alt="OLIMPO - Abrí el cofre">
+
+  <div class="content">
+
+    <h1>ABRÍ TU COFRE</h1>
+    <div class="subtitle">Tu sorpresa OLIMPO te está esperando</div>
+
+    <div class="chest" id="chest">
+      <div class="light"></div>
+      <div class="lid"></div>
+      <div class="base"></div>
+      <div class="lock"></div>
+    </div>
+
+    <button id="openBtn" onclick="abrirCofre()">
+      ABRIR COFRE
+    </button>
+
+    <div class="result" id="result">
+      <h2>¡PREMIO DESBLOQUEADO!</h2>
+
+      <div class="percent">30%</div>
+
+      <h3>EXTRA PARA VOS</h3>
+
+      <p>
+        Felicitaciones. Desbloqueaste tu beneficio especial de OLIMPO.
+      </p>
+
+      <a
+        class="claim"
+        href="https://wa.me/TU_NUMERO?text=Hola%20OLIMPO%2C%20abr%C3%AD%20el%20cofre%20y%20quiero%20reclamar%20mi%2030%25%20extra."
+      >
+        RECLAMAR 30%
+      </a>
+    </div>
+
+    <footer>
+      OLIMPO · TU RED DE CONFIANZA
+    </footer>
+
+  </div>
+</div>
+
+<script>
+  function abrirCofre() {
+    const chest = document.getElementById("chest");
+    const result = document.getElementById("result");
+    const button = document.getElementById("openBtn");
+
+    chest.classList.add("open");
+    button.innerText = "ABRIENDO...";
+    button.disabled = true;
+
+    setTimeout(() => {
+      result.style.display = "block";
+      button.style.display = "none";
+
+      result.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+    }, 1200);
+  }
+</script>
+
+</body>
+</html>
